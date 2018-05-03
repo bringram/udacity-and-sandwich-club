@@ -54,20 +54,28 @@ import java.util.List;
 
 public class JsonUtils {
 
+    private static final String NAME_KEY = "name";
+    private static final String MAIN_NAME_KEY = "mainName";
+    private static final String ALSO_KNOWN_AS_KEY = "alsoKnownAs";
+    private static final String PLACE_OF_ORIGIN_KEY = "placeOfOrigin";
+    private static final String INGREDIENTS_KEY = "ingredients";
+    private static final String DESCRIPTION_KEY = "description";
+    private static final String IMAGE_URL_KEY = "image";
+
     public static Sandwich parseSandwichJson(String json) {
         try {
             // Grab references to all JSON object we will need
             JSONObject sandwichJsonObject = new JSONObject(json);
-            JSONObject nameJsonObject = sandwichJsonObject.getJSONObject("name");
-            JSONArray alsoKnownAsJsonArray = nameJsonObject.getJSONArray("alsoKnownAs");
-            JSONArray ingredientsJsonArray = sandwichJsonObject.getJSONArray("ingredients");
+            JSONObject nameJsonObject = sandwichJsonObject.getJSONObject(NAME_KEY);
+            JSONArray alsoKnownAsJsonArray = nameJsonObject.getJSONArray(ALSO_KNOWN_AS_KEY);
+            JSONArray ingredientsJsonArray = sandwichJsonObject.getJSONArray(INGREDIENTS_KEY);
 
             // Retrieve the fields from the JSON object so we can construct the Sandwich object
-            String mainName = nameJsonObject.getString("mainName");
+            String mainName = nameJsonObject.getString(MAIN_NAME_KEY);
             List<String> alsoKnownAs = convertJsonArrayToStringList(alsoKnownAsJsonArray);
-            String placeOfOrigin = sandwichJsonObject.getString("placeOfOrigin");
-            String description = sandwichJsonObject.getString("description");
-            String image = sandwichJsonObject.getString("image");
+            String placeOfOrigin = sandwichJsonObject.getString(PLACE_OF_ORIGIN_KEY);
+            String description = sandwichJsonObject.getString(DESCRIPTION_KEY);
+            String image = sandwichJsonObject.getString(IMAGE_URL_KEY);
             List<String> ingredients = convertJsonArrayToStringList(ingredientsJsonArray);
 
             return new Sandwich(mainName, alsoKnownAs, placeOfOrigin, description, image, ingredients);
